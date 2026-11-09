@@ -32,7 +32,7 @@ All commands below work the same in any terminal (PowerShell, CMD, Git Bash, mac
 ### Step 1: Get the code
 
 ```
-git clone <public-repository-url>
+git clone https://github.com/raselahmed001/csn-ecommerce.git
 cd csn-ecommerce
 ```
 
