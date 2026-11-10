@@ -41,7 +41,9 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
+            // Relative on purpose: uploaded images load on any host/port (php artisan serve, Laragon .test, ...)
+            // instead of being tied to the APP_URL value in .env.
+            'url' => '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
