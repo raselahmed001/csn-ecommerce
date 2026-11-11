@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 /**
  * Stores and deletes Shop Product thumbnail files.
@@ -18,7 +19,13 @@ class ShopProductThumbnail
     public function store(UploadedFile $file): string
     {
         // hashName() generates a random name, so the user-supplied file name is never used
-        return $file->store(self::DIRECTORY, self::DISK);
+        $path = $file->store(self::DIRECTORY, self::DISK);
+
+        if ($path === false) {
+            throw new RuntimeException('Could not store the thumbnail on the ['.self::DISK.'] disk.');
+        }
+
+        return $path;
     }
 
     public function delete(?string $path): void

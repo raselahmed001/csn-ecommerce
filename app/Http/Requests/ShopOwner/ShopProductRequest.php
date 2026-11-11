@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\ShopOwner;
 
+use App\Models\Shop;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use LogicException;
 
 /**
  * Validation for the three modes of the single form:
@@ -46,7 +48,7 @@ class ShopProductRequest extends FormRequest
                     // A soft-deleted Global Product cannot be added to a shop again
                     Rule::exists('products', 'id')->whereNull('deleted_at'),
                     // No duplicate listing in the same shop
-                    Rule::unique('shop_products', 'product_id')->where('shop_id', $this->route('shop')->id),
+                    Rule::unique('shop_products', 'product_id')->where('shop_id', $this->shop()->id),
                 ],
             ];
         }
@@ -57,6 +59,20 @@ class ShopProductRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255', Rule::unique('products', 'slug')],
             'sku' => ['required', 'string', 'max:100', Rule::unique('products', 'sku')],
         ];
+    }
+
+    /**
+     * The shop from the route (model-bound).
+     */
+    private function shop(): Shop
+    {
+        $shop = $this->route('shop');
+
+        if (! $shop instanceof Shop) {
+            throw new LogicException('The {shop} route parameter must be bound to a Shop model.');
+        }
+
+        return $shop;
     }
 
     /**

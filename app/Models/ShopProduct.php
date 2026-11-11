@@ -17,6 +17,8 @@ class ShopProduct extends Model
 {
     /**
      * A listing only counts while its Global Product still exists (is not soft-deleted).
+     *
+     * @param  Builder<ShopProduct>  $query
      */
     #[Scope]
     protected function withLiveProduct(Builder $query): void
@@ -41,11 +43,17 @@ class ShopProduct extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Shop, $this>
+     */
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
     }
 
+    /**
+     * @return BelongsTo<Product, $this>
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

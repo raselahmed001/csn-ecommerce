@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request, CreateShopOwner $createOwner): RedirectResponse
     {
-        $createOwner->handle($request->validated());
+        $createOwner->handle($request->ownerData());
 
         Inertia::flash('toast', ['type' => 'success', 'message' => 'Shop owner created.']);
 
@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user, UpdateShopOwner $updateOwner): RedirectResponse
     {
-        $updateOwner->handle(User::query()->shopOwners()->findOrFail($user->id), $request->validated());
+        $updateOwner->handle(User::query()->shopOwners()->findOrFail($user->id), $request->ownerData());
 
         Inertia::flash('toast', ['type' => 'success', 'message' => 'Shop owner updated.']);
 

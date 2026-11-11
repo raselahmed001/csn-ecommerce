@@ -22,4 +22,16 @@ class StoreUserRequest extends FormRequest
             'password' => $this->passwordRules(),
         ];
     }
+
+    /**
+     * @return array{name: string, email: string, password: string}
+     */
+    public function ownerData(): array
+    {
+        return [
+            'name' => $this->string('name')->toString(),
+            'email' => $this->string('email')->toString(),
+            'password' => $this->string('password')->toString(),
+        ];
+    }
 }

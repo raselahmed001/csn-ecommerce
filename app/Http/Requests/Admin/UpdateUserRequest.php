@@ -26,4 +26,16 @@ class UpdateUserRequest extends FormRequest
             'password' => ['nullable', ...array_slice($this->passwordRules(), 1)],
         ];
     }
+
+    /**
+     * @return array{name: string, email: string, password: string|null}
+     */
+    public function ownerData(): array
+    {
+        return [
+            'name' => $this->string('name')->toString(),
+            'email' => $this->string('email')->toString(),
+            'password' => $this->filled('password') ? $this->string('password')->toString() : null,
+        ];
+    }
 }

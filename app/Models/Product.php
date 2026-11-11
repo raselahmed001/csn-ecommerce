@@ -16,6 +16,8 @@ class Product extends Model
 
     /**
      * Catalog products that this shop has not listed yet.
+     *
+     * @param  Builder<Product>  $query
      */
     #[Scope]
     protected function notListedIn(Builder $query, Shop $shop): void
@@ -23,6 +25,9 @@ class Product extends Model
         $query->whereDoesntHave('shopProducts', fn (Builder $listings) => $listings->where('shop_id', $shop->id));
     }
 
+    /**
+     * @return HasMany<ShopProduct, $this>
+     */
     public function shopProducts(): HasMany
     {
         return $this->hasMany(ShopProduct::class);
