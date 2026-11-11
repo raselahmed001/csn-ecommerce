@@ -16,7 +16,7 @@ Install these first:
 
 | Tool          | Version          |
 | ------------- | ---------------- |
-| PHP           | 8.3 or newer     |
+| PHP           | 8.4 or newer     |
 | Composer      | 2.x              |
 | Node.js + npm | Node 20 or newer |
 | MySQL         | 8 or newer       |
